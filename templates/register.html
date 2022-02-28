@@ -1,0 +1,83 @@
+{% extends 'baseForSign.html' %}
+{% block content %}
+<div class="card fat shadow-lg p-3 mb-5 bg-white rounded">
+	<div class="card-body">
+		<h4 class="card-title">Register</h4>
+		<form method="POST" class="my-login-validation" novalidate="">
+			{{ form.csrf_token }}
+			<div class="form-group">
+				{{ form.name.label }}
+				{% if form.name.errors %}
+					{{ form.name(class='form-control is-invalid') }}
+					{% for error in form.name.errors %}
+						<div class="invalid-feedback">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% else %}
+					{{ form.name(class='form-control') }}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+				{{ form.email.label }}
+				{% if form.email.errors %}
+					{{ form.email(class='form-control is-invalid') }}
+					{% for error in form.email.errors %}
+						<div class="invalid-feedback">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% elif emailRepeatError %}
+					{{ form.email(class='form-control is-invalid') }}
+						<div class="invalid-feedback">
+							Repeated E-Mail Address
+						</div>
+				{% else %}
+					{{ form.email(class='form-control') }}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+				{{ form.password.label }}
+				{% if form.password.errors %}
+					{{ form.password(class='form-control is-invalid') }}
+					{% for error in form.password.errors %}
+						<div class="invalid-feedback">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% else %}
+					{{ form.password(class='form-control') }}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+				<div class="custom-checkbox custom-control">
+					{% if form.agree.errors %}
+						{{ form.agree(class="custom-control-input is-invalid", required="") }}
+						<label for="agree" class="custom-control-label">I agree to the <a href="#">Terms and Conditions</a></label>
+						{% for error in form.agree.errors %}
+							<div class="invalid-feedback">
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% else %}
+						{{ form.agree(class="custom-control-input", required="") }}
+						<label for="agree" class="custom-control-label">I agree to the <a href="{{ url_for('Terms_and_Conditions') }}">Terms and Conditions</a></label>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="form-group m-0">
+				<button type="submit" class="btn btn-primary btn-block">
+					Register
+				</button>
+			</div>
+			<div class="mt-4 text-center">
+				Already have an account? <a href={{ url_for('login') }}>Login</a>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

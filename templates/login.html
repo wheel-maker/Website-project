@@ -1,0 +1,68 @@
+{% extends 'baseForSign.html' %}
+{% block content %}
+<div class="card fat shadow-lg p-3 mb-5 bg-white rounded">
+	<div class="card-body">
+		<h4 class="card-title">Login</h4>
+		<form method="POST" class="my-login-validation" novalidate="">
+			{{ form.csrf_token }}
+			<div class="form-group">
+				{{ form.email.label }}
+				{% if form.email.errors %}
+					{{ form.email(class='form-control is-invalid') }}
+					{% for error in form.email.errors %}
+						<div class="invalid-feedback">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% elif noEmail %}
+					{{ form.email(class='form-control is-invalid') }}
+					<div class="invalid-feedback">
+						E-Mail Address not found
+					</div>
+				{% else %}
+					{{ form.email(class='form-control') }}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+				<label for="password">Password
+					<a href="{{ url_for('forgot') }}" class="float-right">
+						Forgot Password?
+					</a>
+				</label>
+				{% if form.password.errors %}
+					{{ form.password(class='form-control is-invalid') }}
+					{% for error in form.password.errors %}
+						<div class="invalid-feedback">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% elif incorrectPassword %}
+					{{ form.password(class='form-control is-invalid') }}
+					<div class="invalid-feedback">
+						Incorrect password
+					</div>
+				{% else %}
+					{{ form.password(class='form-control') }}
+				{% endif %}
+			</div>
+
+			<div class="form-group">
+				<div class="custom-checkbox custom-control">
+					{{ form.remember(class='custom-control-input') }}
+					<label for="remember" class="custom-control-label">Remember Me</label>
+				</div>
+			</div>
+
+			<div class="form-group m-0">
+				<button type="submit" class="btn btn-primary btn-block">
+					Login
+				</button>
+			</div>
+			<div class="mt-4 text-center">
+				Don't have an account? <a href="{{ url_for('register') }}">Create One</a>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

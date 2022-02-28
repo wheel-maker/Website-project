@@ -1,0 +1,33 @@
+{% extends 'baseForSign.html' %}
+{% block content %}
+<div class="card fat shadow-lg p-3 mb-5 bg-white rounded">
+	<div class="card-body">
+		<h4 class="card-title">Reset Password</h4>
+		<form method="POST" class="my-login-validation" novalidate="">
+			{{ form.csrf_token }}
+			<div class="form-group">
+				{{ form.newPassword.label }}
+				{% if form.newPassword.errors %}
+					{{ form.newPassword(class='form-control is-invalid') }}
+					{% for error in form.newPassword.errors %}
+						<div class="invalid-feedback">
+							{{ error }}
+						</div>
+					{% endfor %}
+				{% else %}
+					{{ form.newPassword(class='form-control') }}
+				{% endif %}
+				<div class="form-text text-muted">
+					Make sure your password is strong and easy to remember
+				</div>
+			</div>
+
+			<div class="form-group m-0">
+				<button type="submit" class="btn btn-primary btn-block">
+					Reset Password
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
